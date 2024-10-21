@@ -1,0 +1,42 @@
+﻿<Window x:Class="SystemMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="System Monitor" Height="400" Width="600">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock FontSize="18" Text="System Monitor" Margin="0,0,0,10"/>
+
+            <TextBlock Text="CPU Usage:"/>
+            <ProgressBar Name="CpuProgressBar" Maximum="100" Height="20" Margin="0,0,0,10"/>
+            <TextBlock Name="CpuUsageText" Text="0%" FontWeight="Bold"/>
+
+            <TextBlock Text="Memory Usage:"/>
+            <ProgressBar Name="MemoryProgressBar" Maximum="100" Height="20" Margin="0,0,0,10"/>
+            <TextBlock Name="MemoryUsageText" Text="0%" FontWeight="Bold"/>
+
+            <TextBlock Text="Network Usage:"/>
+            <TextBlock Name="NetworkUsageText" Text="0 MB/s" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <lvc:CartesianChart Name="CpuChart" Height="200">
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries Values="{Binding CpuUsageValues}" />
+                </lvc:CartesianChart.Series>
+            </lvc:CartesianChart>
+
+            <TextBlock Text="Filter Processes:" Margin="0,10,0,5"/>
+            <TextBox Name="ProcessFilterTextBox" TextChanged="ProcessFilterTextBox_TextChanged" Width="200" Margin="0,0,0,10"/>
+
+            <ListView Name="ProcessListView" Height="150">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Process Name" DisplayMemberBinding="{Binding ProcessName}" Width="150"/>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button Content="Refresh Data" Click="RefreshData_Click" Width="120"/>
+        </StackPanel>
+    </Grid>
+</Window>
